@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 
@@ -30,17 +31,17 @@ public class AbstractScreen implements Screen
 	protected SpriteBatch batch;
 
 
-	protected OrthographicCamera camera;
+	protected Skin skin;
 
 
-	private Skin skin;
+	protected Stage stage;
 
 
 	public AbstractScreen(Game game)
 	{
 		this.game = game;
-		this.batch = new SpriteBatch();
 		this.skin = new Skin();
+		this.stage = new Stage();
 	}
 
 
@@ -48,35 +49,24 @@ public class AbstractScreen implements Screen
 	public void render(float delta)
 	{
 		Gdx.gl.glClearColor(0, 0, 0, 1);
+		//Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		this.stage.act(delta);
+		this.stage.draw();
 	}
 
 
 	@Override
 	public void resize(int width, int height)
 	{
-		this.camera.setToOrtho(false, width, height);
-		this.camera.update();
+		//this.camera.setToOrtho(false, width, height);
 	}
 
 
 	@Override
 	public void show()
 	{
-		int width = Gdx.graphics.getWidth();
-		int height = Gdx.graphics.getHeight();
-		
-		this.camera = new OrthographicCamera();
-		this.camera.setToOrtho(false, width, height);
-		//this.camera.update();
-		
-		Gdx.app.log(XesEffects.LOG,
-			String.format("pos (%.2f, %.2f, %.2f)",
-				this.camera.position.x,
-				this.camera.position.y,
-				this.camera.position.z
-			)
-		);
 	}
 
 
@@ -107,16 +97,8 @@ public class AbstractScreen implements Screen
 	@Override
 	public void dispose()
 	{
-		batch.dispose();
-	}
-
-
-	/**
-	 * @return the skin
-	 */
-	public Skin getSkin()
-	{
-		return skin;
+		this.stage.dispose();
+		this.skin.dispose();
 	}
 
 }

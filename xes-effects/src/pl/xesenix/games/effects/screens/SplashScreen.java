@@ -20,6 +20,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Scaling;
 
 
 /**
@@ -44,58 +48,31 @@ public final class SplashScreen extends AbstractScreen implements Screen
 	}
 
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.badlogic.gdx.Screen#render(float)
-	 */
-	@Override
-	public void render(float delta)
-	{
-		super.render(delta);
-
-		
-		this.batch.setProjectionMatrix(camera.combined);
-		
-		this.batch.begin();
-		this.batch.draw(bgTextureRegion, 0, 0, Gdx.graphics.getWidth(),	Gdx.graphics.getHeight());
-		this.batch.end();
-
-	}
-
-
 	public void show()
 	{
 		super.show();
 		
 		this.bgTexture = new Texture("data/splash_screen.png");
 		this.bgTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		this.bgTextureRegion = new TextureRegion(bgTexture,
-			0,
-			0,
-			512,
-			(int) (512 * ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth()))
-		);
 	}
 
 
 	public void resize(int width, int height)
 	{
 		super.resize(width, height);
-		// repair of aspect ratio
-		this.bgTextureRegion = new TextureRegion(bgTexture, 0, 0, 512, (int) (512 * ((float) height / (float) width)));
-
-		Gdx.app.log(XesEffects.LOG,
-			String.format("region (%d, %d) resized (%d, %d) graphics (%d, %d) camera (%.2f, %.2f)",
-				this.bgTextureRegion.getRegionWidth(),
-				this.bgTextureRegion.getRegionHeight(),
-				width,
-				height,
-				Gdx.graphics.getWidth(),
-				Gdx.graphics.getHeight(),
-				this.camera.viewportWidth,
-				this.camera.viewportHeight
-			)
-		);
+		
+		this.bgTextureRegion = new TextureRegion(bgTexture, 0, 0, 512, 512);
+		
+		TextureRegionDrawable drawableBg = new TextureRegionDrawable(this.bgTextureRegion);
+		
+		Image splashImage = new Image(drawableBg, Scaling.fillX, Align.left | Align.top);
+		splashImage.setBounds(0, 0, width, height);
+		
+		this.stage.clear();
+		this.stage.addActor(splashImage);
+		this.stage.setViewport(width, height, true);
+		
+		Gdx.app.log(XesEffects.LOG, String.format("image(%.2f, %.2f)", splashImage.getImageWidth(), splashImage.getImageHeight()));
 	}
 
 
