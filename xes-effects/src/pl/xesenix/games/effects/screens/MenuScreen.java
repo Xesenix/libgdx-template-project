@@ -3,11 +3,10 @@
  */
 package pl.xesenix.games.effects.screens;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.parallel;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+
+import java.util.Iterator;
+
 import pl.xesenix.games.effects.XesEffects;
 
 import com.badlogic.gdx.Game;
@@ -19,7 +18,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -53,6 +55,7 @@ public final class MenuScreen extends AbstractScreen
 	{
 		super.render(delta);
 		//TextButton.drawDebug(stage);
+		//Table.drawDebug(stage);
 	}
 	
 	
@@ -103,6 +106,13 @@ public final class MenuScreen extends AbstractScreen
 		
 		// resize stage
 		this.stage.setViewport(width, height, true);
+		
+		Vector2 menuTitleSize = Scaling.fillX.apply(512f, 100f, width, height);
+		
+		this.layout.setPosition(0, 0);
+		this.layout.setWidth(width);
+		this.layout.setHeight(height - menuTitleSize.y);
+		this.layout.invalidate();
 	}
 	
 	
@@ -111,14 +121,53 @@ public final class MenuScreen extends AbstractScreen
 		Gdx.app.log(XesEffects.LOG, "Building mainmenu.");
 		// preparing layout
 		this.layout = new Table();
-		this.layout.setFillParent(true);
+		this.layout.setWidth(Gdx.graphics.getWidth());
+		this.layout.align(Align.top);
 		
 		stage.addActor(layout);
 		
 		// adding buttons
-		TextButton startButton = new TextButton("Start the game", game.getSkin(), "default");
+		TextButton startButton = new TextButton("Choose effect", game.getSkin(), "default");
 		
-		//startButton.debug();
-		layout.add(startButton);
+		layout.add(startButton).width(300f);
+		
+		// new line
+		layout.row();
+		
+		TextButton optionButton = new TextButton("Options", game.getSkin(), "default");
+		
+		layout.add(optionButton).width(300f);
+		
+		// new line
+		layout.row();
+		
+		TextButton creditsButton = new TextButton("Credits", game.getSkin(), "default");
+		
+		layout.add(creditsButton).width(300f);
+		
+		//layout.debug();
+		
+		// menu in animation
+		float delay = 0;
+		
+		for (Iterator<Actor> iter = layout.getChildren().iterator(); iter.hasNext();)
+		{
+			Actor actor = iter.next();
+			
+			actor.setY(20);
+			actor.addAction(
+				sequence(
+					fadeOut(0),
+					delay(delay),
+					moveBy(50f, 0, 0),
+					parallel(
+						moveBy(-50f, 0, 0.5f),
+						fadeIn(0.3f)
+					)
+				)
+			);
+			
+			delay += 0.3f;
+		}
 	}
 }

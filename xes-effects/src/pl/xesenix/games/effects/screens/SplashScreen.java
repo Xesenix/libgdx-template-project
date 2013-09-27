@@ -141,7 +141,7 @@ public final class SplashScreen extends AbstractScreen implements Screen
 			sequence(
 				parallel(
 					fadeOut(1.5f),
-					moveTo(0, Gdx.graphics.getHeight(), 2.5f)
+					moveTo(0, Gdx.graphics.getHeight(), 2.0f)
 				),
 				new Action() {
 					public boolean act(float delta)
@@ -152,5 +152,7 @@ public final class SplashScreen extends AbstractScreen implements Screen
 				}
 			)
 		);
+		
+		this.bgImage.addAction(fadeOut(1.5f));
 	}
 }
