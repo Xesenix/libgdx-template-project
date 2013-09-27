@@ -1,6 +1,7 @@
 
 package pl.xesenix.games.effects;
 
+import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -14,7 +15,9 @@ public class Main
 		cfg.useGL20 = false;
 		cfg.width = 480;
 		cfg.height = 320;
-
+		cfg.addIcon("icons/icon32.png", FileType.Internal);
+		cfg.addIcon("icons/icon16.png", FileType.Internal);
+		
 		new LwjglApplication(new XesEffects(), cfg);
 	}
 }

@@ -20,13 +20,12 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 
 public class XesEffects extends Game
 {
-	public static final String LOG = XesEffects.class.getSimpleName();
+	public static final String LOG = "XesEffects";
 
 
 	private FPSLogger fpsLogger;

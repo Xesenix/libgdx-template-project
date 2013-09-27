@@ -1,0 +1,20 @@
+{
+"com.badlogic.gdx.graphics.g2d.BitmapFont": {
+	"default-font": { "file": "fonts/default.fnt" },
+	"default-button-font": { "file": "fonts/button.fnt" },
+},
+"com.badlogic.gdx.graphics.Color": {
+	"green": { "a": 1, "b": 0, "g": 1, "r": 0 },
+	"white": { "a": 1, "b": 1, "g": 1, "r": 1 },
+	"red": { "a": 1, "b": 0, "g": 0, "r": 1 },
+	"black": { "a": 1, "b": 0, "g": 0, "r": 0 }
+},
+"com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
+	"default": { "down": "button_down", "up": "button_up" },
+	"toggle": { "down": "button_down", "checked": "button_down", "up": "button_up" }
+},
+"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+	"default": { "down": "button_down", "up": "button_up", "font": "default-button-font", "fontColor": "white" },
+	"toggle": { "down": "button_down", "up": "button_up", "checked": "button_down", "font": "default-button-font", "fontColor": "white", "downFontColor": "red" }
+}
+}
