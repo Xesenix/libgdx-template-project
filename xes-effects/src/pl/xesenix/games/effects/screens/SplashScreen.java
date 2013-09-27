@@ -9,14 +9,11 @@
 
 package pl.xesenix.games.effects.screens;
 
-import javax.sound.midi.Sequence;
-
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import pl.xesenix.games.effects.XesEffects;
 import pl.xesenix.games.tweens.ColorAccessor;
 import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenManager;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -28,14 +25,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
-
-
-
-
-
-
-
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 /**
  * @author Xesenix

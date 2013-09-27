@@ -9,7 +9,6 @@
 
 package pl.xesenix.games.effects;
 
-import pl.xesenix.games.effects.screens.AbstractScreen;
 import pl.xesenix.games.effects.screens.MenuScreen;
 import pl.xesenix.games.effects.screens.SplashScreen;
 import pl.xesenix.games.tweens.ColorAccessor;
@@ -22,18 +21,24 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-
+/**
+ * @author Xesenix
+ *
+ */
 public class XesEffects extends Game
 {
 	public static final String LOG = "XesEffects";
 
 
 	private FPSLogger fpsLogger;
-	
-	
+
+
 	private TweenManager tweenManager;
 
 
+	/**
+	 * UI Skin
+	 */
 	private Skin skin;
 
 
@@ -41,15 +46,15 @@ public class XesEffects extends Game
 	public void create()
 	{
 		Gdx.app.log(XesEffects.LOG, "Creating game object..");
-		
+
 		this.fpsLogger = new FPSLogger();
 		this.tweenManager = new TweenManager();
-		
+
 		Tween.setCombinedAttributesLimit(4);
 		Tween.registerAccessor(Color.class, new ColorAccessor());
-		
+
 		this.skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
-		
+
 		this.setScreen(this.getSplashScreen());
 	}
 
@@ -65,11 +70,11 @@ public class XesEffects extends Game
 	public void render()
 	{
 		final float delta = Gdx.graphics.getDeltaTime();
-		
+
 		super.render();
-		
+
 		this.tweenManager.update(delta);
-		
+
 		this.fpsLogger.log();
 	}
 
@@ -84,20 +89,29 @@ public class XesEffects extends Game
 	@Override
 	public void pause()
 	{
+		super.pause();
 	}
 
 
 	@Override
 	public void resume()
 	{
+		super.resume();
 	}
 
 
+	/**
+	 * @return splash screen
+	 */
 	public SplashScreen getSplashScreen()
 	{
 		return new SplashScreen(this);
 	}
-	
+
+
+	/**
+	 * @return menu screen
+	 */
 	public MenuScreen getMenuScreen()
 	{
 		return new MenuScreen(this);
@@ -113,6 +127,9 @@ public class XesEffects extends Game
 	}
 
 
+	/**
+	 * @return skin
+	 */
 	public Skin getSkin()
 	{
 		return this.skin;
