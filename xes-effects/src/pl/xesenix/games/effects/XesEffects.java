@@ -20,6 +20,12 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 
 public class XesEffects extends Game
@@ -33,6 +39,9 @@ public class XesEffects extends Game
 	private TweenManager tweenManager;
 
 
+	private Skin skin;
+
+
 	@Override
 	public void create()
 	{
@@ -43,7 +52,39 @@ public class XesEffects extends Game
 		Tween.setCombinedAttributesLimit(4);
 		Tween.registerAccessor(Color.class, new ColorAccessor());
 		
+		this.prepareSkin();
+		
 		this.setScreen(this.getSplashScreen());
+	}
+
+
+	private void prepareSkin()
+	{
+		this.skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+		
+		BitmapFont font = new BitmapFont(Gdx.files.internal("fonts/default.fnt"));
+		
+		this.skin.add("default-font", font, BitmapFont.class);
+		
+		font = new BitmapFont(Gdx.files.internal("fonts/courgette.fnt"));
+		
+		this.skin.add("courgette-font", font, BitmapFont.class);
+		
+		font = new BitmapFont(Gdx.files.internal("fonts/berkshire_swash_bold.fnt"));
+		
+		this.skin.add("berkshire-swash-bold-font", font, BitmapFont.class);
+		
+		TextureAtlas atlas = new TextureAtlas("ui/uiskin.atlas");
+		
+		NinePatch patchUp = new NinePatch(atlas.findRegion("button_up"), 11, 11, 12, 12);
+		NinePatchDrawable drawableUp = new NinePatchDrawable(patchUp);
+		
+		NinePatch patchDown = new NinePatch(atlas.findRegion("button_down"), 11, 11, 12, 12);
+		NinePatchDrawable drawableDown = new NinePatchDrawable(patchDown);
+		
+		TextButtonStyle style = new TextButtonStyle(drawableUp, drawableDown, drawableDown, font);
+		
+		this.skin.add("default", style, TextButtonStyle.class);
 	}
 
 
@@ -51,6 +92,7 @@ public class XesEffects extends Game
 	public void dispose()
 	{
 		super.render();
+		this.skin.dispose();
 	}
 
 
@@ -103,5 +145,11 @@ public class XesEffects extends Game
 	public TweenManager getTweenManager()
 	{
 		return tweenManager;
+	}
+
+
+	public Skin getSkin()
+	{
+		return this.skin;
 	}
 }

@@ -15,10 +15,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 
@@ -31,6 +39,7 @@ public final class MenuScreen extends AbstractScreen
 
 	private Texture bgTexture;
 	private Image bgImage;
+	private Table layout;
 
 
 	public MenuScreen(XesEffects game)
@@ -43,6 +52,7 @@ public final class MenuScreen extends AbstractScreen
 	public void render(float delta)
 	{
 		super.render(delta);
+		//TextButton.drawDebug(stage);
 	}
 	
 	
@@ -67,6 +77,9 @@ public final class MenuScreen extends AbstractScreen
 		this.stage.clear();
 		this.stage.addActor(this.bgImage);
 		
+		// building menu
+		this.buildMenu();
+		
 		// show animation
 		this.stage.addAction(
 			sequence(
@@ -90,5 +103,22 @@ public final class MenuScreen extends AbstractScreen
 		
 		// resize stage
 		this.stage.setViewport(width, height, true);
+	}
+	
+	
+	protected void buildMenu()
+	{
+		Gdx.app.log(XesEffects.LOG, "Building mainmenu.");
+		// preparing layout
+		this.layout = new Table();
+		this.layout.setFillParent(true);
+		
+		stage.addActor(layout);
+		
+		// adding buttons
+		TextButton startButton = new TextButton("Start the game", game.getSkin(), "default");
+		
+		//startButton.debug();
+		layout.add(startButton);
 	}
 }

@@ -125,6 +125,8 @@ public final class SplashScreen extends AbstractScreen implements Screen
 	
 	public void tweenToScreen(final AbstractScreen targetScreen)
 	{
+		game.getTweenManager().killAll();
+		
 		Tween
 		.to(this.bgColor, ColorAccessor.RGBA, 1.0f)
 		.target(
@@ -135,10 +137,10 @@ public final class SplashScreen extends AbstractScreen implements Screen
 		)
 		.start(game.getTweenManager());
 		
-		this.bgImage.addAction(
+		this.stage.addAction(
 			sequence(
 				parallel(
-					fadeOut(2.5f),
+					fadeOut(1.5f),
 					moveTo(0, Gdx.graphics.getHeight(), 2.5f)
 				),
 				new Action() {
