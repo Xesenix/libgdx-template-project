@@ -13,8 +13,8 @@ public class Main
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "xes-effects";
 		cfg.useGL20 = false;
-		cfg.width = 480;
-		cfg.height = 320;
+		cfg.width = (int) XesEffects.GAME_SCREEN_BASE_WIDTH;
+		cfg.height = (int) XesEffects.GAME_SCREEN_BASE_HEIGHT;
 		cfg.addIcon("icons/icon32.png", FileType.Internal);
 		cfg.addIcon("icons/icon16.png", FileType.Internal);
 		

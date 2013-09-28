@@ -13,94 +13,37 @@ package pl.xesenix.games.effects.screens;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
-import java.util.Iterator;
-
-import pl.xesenix.games.effects.XesEffects;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Scaling;
+
+import pl.xesenix.games.effects.XesEffects;
+import aurelienribon.tweenengine.Tween;
+import com.badlogic.gdx.graphics.Color;
 
 /**
  * @author Xesenix
  *
  */
-public final class MenuScreen extends AbstractScreen
+public final class MenuScreen extends AbstractMenuScreen
 {
-
-	private Texture bgTexture;
-	private Image bgImage;
-	private Table layout;
-
 
 	public MenuScreen(XesEffects game)
 	{
 		super(game);
-		this.bgColor = new Color(0.0f, 0.0f, 0.0f, 1);
+		this.backgroundFileName = "data/menu_screen_bg.png";
 	}
 	
 	
-	public void render(float delta)
-	{
-		super.render(delta);
-		//TextButton.drawDebug(stage);
-		//Table.drawDebug(stage);
-	}
-	
-	
-	public void show()
-	{
-		Gdx.app.log(XesEffects.LOG, "Showing MenuScreen");
-		super.show();
-		// preparing actors
-		// - background:
-		this.bgTexture = new Texture("data/menu_screen_bg.png");
-		this.bgTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
-		TextureRegion bgTextureRegion = new TextureRegion(bgTexture, 0, 0, 512, 512);
-		
-		TextureRegionDrawable drawableBg = new TextureRegionDrawable(bgTextureRegion);
-		
-		this.bgImage = new Image(drawableBg, Scaling.fillX, Align.top);
-		this.bgImage.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		this.bgImage.setFillParent(true);
-		
-		// building stage
-		this.stage.clear();
-		this.stage.addActor(this.bgImage);
-		
-		// building menu
-		this.buildMenu();
-		
-		// show animation
-		this.stage.addAction(
-			sequence(
-				fadeOut(0),
-				parallel(
-					fadeIn(1.5f)
-				)
-			)
-		);
-	}
-
-
 	public void resize(int width, int height)
 	{
 		Gdx.app.log(XesEffects.LOG, "Resizing MenuScreen");
 		super.resize(width, height);
-		
-		// resize stage
-		this.stage.setViewport(width, height, true);
 		
 		Vector2 menuTitleSize = Scaling.fillX.apply(512f, 100f, width, height);
 		
@@ -111,18 +54,23 @@ public final class MenuScreen extends AbstractScreen
 	}
 	
 	
-	protected void buildMenu()
+	protected void addUserInterface()
 	{
-		Gdx.app.log(XesEffects.LOG, "Building mainmenu.");
+		Gdx.app.log(XesEffects.LOG, "Building MainMenu UI..");
 		// preparing layout
 		this.layout = new Table();
 		this.layout.setWidth(Gdx.graphics.getWidth());
 		this.layout.align(Align.top);
 		
-		stage.addActor(layout);
+		this.stage.addActor(layout);
 		
 		// adding buttons
 		TextButton startButton = new TextButton("Choose effect", game.getSkin(), "default");
+		startButton.addListener(new ClickListener() {
+			public void clicked (InputEvent event, float x, float y) {
+				tweenToScreen(game.getEffectsGalleryScreen(0));
+			}
+		});
 		
 		layout.add(startButton).width(300f);
 		
@@ -141,28 +89,5 @@ public final class MenuScreen extends AbstractScreen
 		layout.add(creditsButton).width(300f);
 		
 		//layout.debug();
-		
-		// menu in animation
-		float delay = 0;
-		
-		for (Iterator<Actor> iter = layout.getChildren().iterator(); iter.hasNext();)
-		{
-			Actor actor = iter.next();
-			
-			actor.setY(20);
-			actor.addAction(
-				sequence(
-					fadeOut(0),
-					delay(delay),
-					moveBy(50f, 0, 0),
-					parallel(
-						moveBy(-50f, 0, 0.5f),
-						fadeIn(0.3f)
-					)
-				)
-			);
-			
-			delay += 0.3f;
-		}
 	}
 }

@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 /**
  * @author Xesenix
@@ -29,16 +30,13 @@ public class AbstractScreen implements Screen
 	protected XesEffects game;
 
 
-	protected SpriteBatch batch;
-
-
 	protected Skin skin;
 
 
 	protected Stage stage;
 	
 	
-	public Color bgColor;
+	public Color bgColor = new Color(0.0f, 0.0f, 0.0f, 1);
 
 
 	public AbstractScreen(XesEffects game)
@@ -58,6 +56,8 @@ public class AbstractScreen implements Screen
 
 		this.stage.act(delta);
 		this.stage.draw();
+		
+		Table.drawDebug(this.stage);
 	}
 
 
@@ -65,7 +65,8 @@ public class AbstractScreen implements Screen
 	public void resize(int width, int height)
 	{
 		Gdx.app.log(XesEffects.LOG, "Resizing AbstractScreen");
-		//this.camera.setToOrtho(false, width, height);
+		
+		this.stage.setViewport(width, height, true);
 	}
 
 
@@ -74,6 +75,8 @@ public class AbstractScreen implements Screen
 	{
 		Gdx.app.log(XesEffects.LOG, "Showing AbstractScreen");
 		Gdx.input.setInputProcessor(this.stage);
+		
+		this.stage.clear();
 	}
 
 

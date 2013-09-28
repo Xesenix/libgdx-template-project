@@ -95,16 +95,6 @@ public final class SplashScreen extends AbstractScreen implements Screen
 	}
 
 
-	public void resize(int width, int height)
-	{
-		Gdx.app.log(XesEffects.LOG, "Resizing SplashScreen");
-		super.resize(width, height);
-		
-		// resize stage
-		this.stage.setViewport(width, height, true);
-	}
-
-
 	public void dispose()
 	{
 		super.dispose();
