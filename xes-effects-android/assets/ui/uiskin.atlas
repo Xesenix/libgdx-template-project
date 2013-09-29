@@ -3,27 +3,19 @@ uiskin.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-button_disabled
-  rotate: false
-  xy: 1, 1
-  size: 24, 44
-  split: 11, 11, 12, 12
-  orig: 24, 44
-  offset: 0, 0
-  index: -1
 button_down
   rotate: false
-  xy: 27, 1
+  xy: 0, 0
   size: 24, 44
-  split: 11, 11, 12, 12
+  split: 11, 11, 11, 11
   orig: 24, 44
   offset: 0, 0
   index: -1
 button_up
   rotate: false
-  xy: 53, 1
+  xy: 24, 0
   size: 24, 44
-  split: 11, 11, 12, 12
+  split: 11, 11, 11, 11
   orig: 24, 44
   offset: 0, 0
   index: -1
