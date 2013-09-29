@@ -25,11 +25,18 @@ public class EffectScreen extends AbstractScreen
 
 	/**
 	 * @param game
+	 * @throws Exception 
 	 */
-	public EffectScreen(XesEffects game, EffectScreenConfig config)
+	public EffectScreen(XesEffects game, IScreenConfig config) throws Exception
 	{
 		super(game);
-		this.config = config;
+		
+		if (!(config instanceof EffectScreenConfig))
+		{
+			throw new Exception("Config object doesn`t extend EffectScreenConfig");
+		}
+		
+		this.config = (EffectScreenConfig) config;
 	}
 
 	
@@ -42,7 +49,7 @@ public class EffectScreen extends AbstractScreen
 		
 		this.stage.addActor(this.layout);
 		
-		Label label = new Label(this.config.getName(), game.getSkin(), "default");
+		Label label = new Label(this.config.getTitle(), game.getSkin(), "default");
 		
 		this.layout.add(label);
 		

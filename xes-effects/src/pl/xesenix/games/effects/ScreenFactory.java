@@ -5,38 +5,39 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 
+import pl.xesenix.games.effects.screens.IScreenConfig;
 import pl.xesenix.games.effects.screens.EffectScreen;
 
-public class EffectFactory
+public class ScreenFactory<T extends IScreenConfig>
 {
 	private XesEffects game;
 	
 	
-	private LinkedHashMap<String, EffectScreenConfig> effectsConfigs;
+	private LinkedHashMap<String, T> screenConfigs;
 	
 
-	public EffectFactory(XesEffects game)
+	public ScreenFactory(XesEffects game)
 	{
 		this.game = game;
-		this.effectsConfigs = new LinkedHashMap<String, EffectScreenConfig>();
+		this.screenConfigs = new LinkedHashMap<String, T>();
 	}
 	
-	public EffectFactory add(EffectScreenConfig config)
+	public ScreenFactory<T> add(T config)
 	{
-		this.effectsConfigs.put(config.getName(), config);
+		this.screenConfigs.put(config.getName(), config);
 		
 		return this;
 	}
 
 	public EffectScreen getScreen(String name)
 	{
-		EffectScreenConfig config = this.effectsConfigs.get(name);
-		String className = config.getEffectClass().getName();
+		T config = this.screenConfigs.get(name);
+		String className = config.getScreenClass().getName();
 		
 		try
 		{
 			Class cl = Class.forName(className);
-			Constructor con = cl.getConstructor(XesEffects.class, EffectScreenConfig.class);
+			Constructor con = cl.getConstructor(XesEffects.class, IScreenConfig.class);
 			
 			return (EffectScreen) con.newInstance(this.game, config);
 		}
@@ -79,9 +80,9 @@ public class EffectFactory
 		return null;
 	}
 	
-	public Collection<EffectScreenConfig> getCollection()
+	public Collection<T> getCollection()
 	{
-		return this.effectsConfigs.values();
+		return this.screenConfigs.values();
 	}
 
 }

@@ -56,7 +56,7 @@ public class XesEffects extends Game
 	private Skin skin;
 
 
-	private EffectFactory effectFactory;
+	private ScreenFactory<EffectScreenConfig> effectsCollection;
 
 
 	@Override
@@ -73,8 +73,11 @@ public class XesEffects extends Game
 		this.skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 		
 		int index = 1;
-		this.effectFactory = new EffectFactory(this);
-		this.effectFactory.add(new EffectScreenConfig(String.format("Effect %d", index++), EffectScreen.class));
+		this.effectsCollection = new ScreenFactory<EffectScreenConfig>(this);
+		this.effectsCollection.add(
+			(new EffectScreenConfig(String.format("Effect %d", index++), EffectScreen.class))
+			.setTitle("Test subject number 1")
+		);
 
 		this.setScreen(this.getSplashScreen());
 	}
@@ -84,6 +87,7 @@ public class XesEffects extends Game
 	public void dispose()
 	{
 		super.render();
+		this.skin.dispose();
 	}
 
 
@@ -153,7 +157,7 @@ public class XesEffects extends Game
 	 */
 	public EffectScreen getEffectScreen(String name)
 	{
-		return this.getEffectFactory().getScreen(name);
+		return this.getEffects().getScreen(name);
 	}
 
 
@@ -178,8 +182,8 @@ public class XesEffects extends Game
 	/**
 	 * @return the effectFactory
 	 */
-	public EffectFactory getEffectFactory()
+	public ScreenFactory<EffectScreenConfig> getEffects()
 	{
-		return effectFactory;
+		return effectsCollection;
 	}
 }

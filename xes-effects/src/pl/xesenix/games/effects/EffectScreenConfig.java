@@ -1,17 +1,22 @@
 package pl.xesenix.games.effects;
 
-public class EffectScreenConfig
+import pl.xesenix.games.effects.screens.IScreenConfig;
+
+public class EffectScreenConfig implements IScreenConfig
 {
 	private String name;
 	
 	
-	private Class effectClass;
+	private Class screenClass;
+
+
+	private String title;
 	
 	
-	public EffectScreenConfig(String name, Class<?> effectClass)
+	public EffectScreenConfig(String name, Class screenClass)
 	{
 		setName(name);
-		setEffectClass(effectClass);
+		setScreenClass(screenClass);
 	}
 	
 	
@@ -36,17 +41,35 @@ public class EffectScreenConfig
 	/**
 	 * @return the effectClass
 	 */
-	public Class getEffectClass()
+	public Class getScreenClass()
 	{
-		return effectClass;
+		return screenClass;
 	}
 
 	/**
-	 * @param effectClass the effectClass to set
+	 * @param screenClass the effectClass to set
 	 */
-	public EffectScreenConfig setEffectClass(Class effectClass)
+	public EffectScreenConfig setScreenClass(Class screenClass)
 	{
-		this.effectClass = effectClass;
+		this.screenClass = screenClass;
+		
+		return this;
+	}
+
+
+	public String getTitle()
+	{
+		return this.title;
+	}
+	
+	
+	/**
+	 * @param String title
+	 * @return EffectScreenConfig
+	 */
+	public EffectScreenConfig setTitle(String title)
+	{
+		this.title = title;
 		
 		return this;
 	}

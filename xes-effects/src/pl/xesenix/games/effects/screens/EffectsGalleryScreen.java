@@ -57,7 +57,7 @@ public class EffectsGalleryScreen extends AbstractMenuScreen
 		float cellWidth = XesEffects.GAME_SCREEN_BASE_WIDTH / (float) EffectsGalleryScreen.COLUMN_COUNT;
 		float cellHeight = XesEffects.GAME_SCREEN_BASE_HEIGHT / (float) ((EffectsGalleryScreen.ITEM_PER_PAGE - 1) / EffectsGalleryScreen.COLUMN_COUNT + 2);
 		
-		Collection<EffectScreenConfig> effectsCollection = this.game.getEffectFactory().getCollection();
+		Collection<EffectScreenConfig> effectsCollection = this.game.getEffects().getCollection();
 		List<EffectScreenConfig> allEffectsList = new ArrayList<EffectScreenConfig>(effectsCollection);
 		int fromItemIndex = Math.min(page * EffectsGalleryScreen.ITEM_PER_PAGE, allEffectsList.size());
 		int toItemIndex = Math.min((page + 1) * EffectsGalleryScreen.ITEM_PER_PAGE, allEffectsList.size());
